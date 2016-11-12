@@ -8,7 +8,7 @@ import org.apache.mesos.v1.Protos.OfferID;
 import org.apache.mesos.v1.Protos.TaskStatus;
 import org.apache.mesos.v1.scheduler.Protos;
 
-public interface MesosCallbacks {
+public interface MesosSchedulerCallbacks {
 
 	public void receivedSubscribed(Protos.Event.Subscribed subscribed);
 

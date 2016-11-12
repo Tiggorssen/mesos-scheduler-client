@@ -68,9 +68,9 @@ import rx.subjects.SerializedSubject;
  * 
  */
 
-public abstract class MesosClient implements MesosCallbacks {
+public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, MesosSchedulerCalls {
 
-	private static final Logger log = LoggerFactory.getLogger(MesosClient.class);
+	private static final Logger log = LoggerFactory.getLogger(MesosSchedulerClient.class);
 
 	private SerializedSubject<Optional<SinkOperation<Call>>, Optional<SinkOperation<Call>>> publisher;
 
