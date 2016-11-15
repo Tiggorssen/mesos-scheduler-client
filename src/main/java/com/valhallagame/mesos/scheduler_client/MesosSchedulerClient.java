@@ -210,115 +210,135 @@ public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, M
 		sendCall(call);
 	}
 
+	@Override
 	public void teardown() {
 		sendCall(build(), Type.TEARDOWN);
 	}
 
+	@Override
 	public void accept(List<OfferID> offerIds, List<Offer.Operation> offerOperations) {
 		Builder accept = build()
 				.setAccept(Accept.newBuilder().addAllOfferIds(offerIds).addAllOperations(offerOperations));
 		sendCall(accept, Type.ACCEPT);
 	}
 
+	@Override
 	public void accept(List<OfferID> offerIds, List<Offer.Operation> offerOperations, Filters filters) {
 		Builder accept = build().setAccept(
 				Accept.newBuilder().addAllOfferIds(offerIds).addAllOperations(offerOperations).setFilters(filters));
 		sendCall(accept, Type.ACCEPT);
 	}
 
+	@Override
 	public void decline(List<OfferID> offerIds) {
 		Builder decline = build().setDecline(Decline.newBuilder().addAllOfferIds(offerIds));
 		sendCall(decline, Type.DECLINE);
 	}
 
+	@Override
 	public void decline(List<OfferID> offerIds, Filters filters) {
 		Builder decline = build().setDecline(Decline.newBuilder().addAllOfferIds(offerIds).setFilters(filters));
 		sendCall(decline, Type.DECLINE);
 	}
 
+	@Override
 	public void acceptInverseOffers(List<OfferID> offerIds) {
 		Builder acceptInverseOffers = build()
 				.setAcceptInverseOffers(AcceptInverseOffers.newBuilder().addAllInverseOfferIds(offerIds));
 		sendCall(acceptInverseOffers, Type.ACCEPT_INVERSE_OFFERS);
 	}
 
+	@Override
 	public void acceptInverseOffers(List<OfferID> offerIds, Filters filters) {
 		Builder acceptInverseOffers = build().setAcceptInverseOffers(
 				AcceptInverseOffers.newBuilder().addAllInverseOfferIds(offerIds).setFilters(filters));
 		sendCall(acceptInverseOffers, Type.ACCEPT_INVERSE_OFFERS);
 	}
 
+	@Override
 	public void declineInverseOffers(List<OfferID> offerIds) {
 		Builder declineInverseOffers = build()
 				.setDeclineInverseOffers(DeclineInverseOffers.newBuilder().addAllInverseOfferIds(offerIds));
 		sendCall(declineInverseOffers, Type.DECLINE_INVERSE_OFFERS);
 	}
 
+	@Override
 	public void declineInverseOffers(List<OfferID> offerIds, Filters filters) {
 		Builder declineInverseOffers = build().setDeclineInverseOffers(
 				DeclineInverseOffers.newBuilder().addAllInverseOfferIds(offerIds).setFilters(filters));
 		sendCall(declineInverseOffers, Type.DECLINE_INVERSE_OFFERS);
 	}
 
+	@Override
 	public void kill(TaskID taskId) {
 		Builder kill = build().setKill(Kill.newBuilder().setTaskId(taskId));
 		sendCall(kill, Type.KILL);
 	}
 
+	@Override
 	public void kill(TaskID taskId, AgentID agentId, KillPolicy killPolicy) {
 		Builder kill = build()
 				.setKill(Kill.newBuilder().setTaskId(taskId).setAgentId(agentId).setKillPolicy(killPolicy));
 		sendCall(kill, Type.KILL);
 	}
 
+	@Override
 	public void kill(TaskID taskId, KillPolicy killPolicy) {
 		Builder kill = build().setKill(Kill.newBuilder().setTaskId(taskId).setKillPolicy(killPolicy));
 		sendCall(kill, Type.KILL);
 	}
 
+	@Override
 	public void kill(TaskID taskId, AgentID agentId) {
 		Builder kill = build().setKill(Kill.newBuilder().setTaskId(taskId).setAgentId(agentId));
 		sendCall(kill, Type.KILL);
 	}
 
+	@Override
 	public void revive() {
 		Builder revive = build();
 		sendCall(revive, Type.REVIVE);
 	}
 
+	@Override
 	public void shutdown(ExecutorID executorId) {
 		Builder shutdown = build().setShutdown(Shutdown.newBuilder().setExecutorId(executorId));
 		sendCall(shutdown, Type.SHUTDOWN);
 	}
 
+	@Override
 	public void shutdown(ExecutorID executorId, AgentID agentId) {
 		Builder shutdown = build().setShutdown(Shutdown.newBuilder().setExecutorId(executorId).setAgentId(agentId));
 		sendCall(shutdown, Type.SHUTDOWN);
 	}
 
+	@Override
 	public void acknowledge(AgentID agentId, TaskID taskId, ByteString uuid) {
 		Builder acknowledge = build()
 				.setAcknowledge(Acknowledge.newBuilder().setAgentId(agentId).setTaskId(taskId).setUuid(uuid));
 		sendCall(acknowledge, Type.ACKNOWLEDGE);
 	}
 
+	@Override
 	public void reconsile(List<Reconcile.Task> tasks) {
 		Builder reconsile = build().setReconcile(Reconcile.newBuilder().addAllTasks(tasks));
 		sendCall(reconsile, Type.RECONCILE);
 	}
 
+	@Override
 	public void message(AgentID agentId, ExecutorID executorId, ByteString data) {
 		Builder message = build()
 				.setMessage(Message.newBuilder().setAgentId(agentId).setExecutorId(executorId).setData(data));
 		sendCall(message, Type.MESSAGE);
 	}
 
+	@Override
 	public void request(List<org.apache.mesos.v1.Protos.Request> requests) {
 		Builder request = build().setRequest(Request.newBuilder().addAllRequests(requests));
 		sendCall(request, Type.REQUEST);
 	}
 
-	private Builder build() {
+	private static Builder build() {
 		return Call.newBuilder();
 	}
 

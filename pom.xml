@@ -16,18 +16,45 @@
 
 	<dependencies>
 
-		<!-- This wraps around this library, but disconnects the implementation from RX -->
+		<!-- This wraps around this library, but disconnects the implementation 
+			from RX -->
 
 		<dependency>
-		    <groupId>com.mesosphere.mesos.rx.java</groupId>
-		    <artifactId>mesos-rxjava-protobuf-client</artifactId>
-		    <version>0.1.0</version>
+			<groupId>com.mesosphere.mesos.rx.java</groupId>
+			<artifactId>mesos-rxjava-protobuf-client</artifactId>
+			<version>0.1.0</version>
 		</dependency>
 
 	</dependencies>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>valhalla</id>
+			<url>http://maven.valhalla-game.com:8082/repository/valhalla/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.5.1</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<serverId>valhalla</serverId>
+					<nexusUrl>http://maven.valhalla-game.com:8082/nexus</nexusUrl>
+					<skipStaging>true</skipStaging>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -39,5 +66,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
