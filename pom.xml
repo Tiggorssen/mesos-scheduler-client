@@ -1,14 +1,48 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>com.valhalla-game</groupId>
 	<artifactId>mesos-scheduler-client</artifactId>
 	<version>0.0.1</version>
+	
 	<packaging>jar</packaging>
-	<name>Mesos Schduler Client</name>
+	
+	<name>${project.groupId}:${project.artifactId}</name>
 	<url>https://github.com/saiaku-gaming/mesos-scheduler-client</url>
+	<description>An easy way to create a mesos scheduler client without using RxJava</description>
+	
+	<developers>
+		<developer>
+			<name>Mikael Berglund</name>
+			<email>berglund86@gmail.com</email>
+			<organization>Saiaku-gaming</organization>
+			<organizationUrl>https://github.com/PhroZenOne</organizationUrl>
+		</developer>
+		<developer>
+			<name>Mio Engel</name>
+			<email/>
+			<organization>Saiaku-gaming</organization>
+			<organizationUrl>https://github.com/Frodenkvist</organizationUrl>
+		</developer>
+	</developers>
+	
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+	
+	<scm>
+		<connection>scm:git:git://github.com/saiaku-gaming/mesos-scheduler-client.git</connection>
+		<developerConnection>scm:git:ssh://github.com:saiaku-gaming/mesos-scheduler-client.git</developerConnection>
+		<url>http://github.com/saiaku-gaming/mesos-scheduler-client/tree/master</url>
+	</scm>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	
 	<dependencies>
 		<!-- This wraps around this library, but disconnects the implementation 
 			from RX -->
@@ -18,12 +52,18 @@
 			<version>0.1.0</version>
 		</dependency>
 	</dependencies>
+	
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
 	</distributionManagement>
+	
 	<build>
 		<plugins>
 			<plugin>
