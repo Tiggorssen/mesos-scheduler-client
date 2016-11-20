@@ -195,7 +195,7 @@ public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, M
 				.setUser(Optional.ofNullable(System.getenv("user")).orElse("root")) // https://issues.apache.org/jira/browse/MESOS-3747
 				.setName(frameworkName).setFailoverTimeout(failoverTimeout).setRole(mesosRole);
 
-		if (frameworkId != null && frameworkId.isEmpty()) {
+		if (frameworkId != null && !frameworkId.isEmpty()) {
 			frameworkBuilder.setId(Protos.FrameworkID.newBuilder().setValue(frameworkId));
 		}
 
@@ -204,7 +204,7 @@ public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, M
 		Call.Builder sub = Call.newBuilder().setType(Type.SUBSCRIBE)
 				.setSubscribe(Subscribe.newBuilder().setFrameworkInfo(fw));
 
-		if (frameworkId != null && frameworkId.isEmpty()) {
+		if (frameworkId != null && !frameworkId.isEmpty()) {
 			sub.setFrameworkId(Protos.FrameworkID.newBuilder().setValue(frameworkId));
 		}
 
