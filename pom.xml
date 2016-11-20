@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.valhalla-game</groupId>
 	<artifactId>mesos-scheduler-client</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 	<name>Mesos Schduler Client</name>
 	<url>https://github.com/saiaku-gaming/mesos-scheduler-client</url>

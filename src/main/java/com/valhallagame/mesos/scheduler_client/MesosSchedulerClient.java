@@ -319,10 +319,8 @@ public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, M
 
 	/**
 	 * Closes the connection to mesos.
-	 * 
-	 * @throws IOException
 	 */
-	public void close() throws IOException {
+	public void close() {
 		if (openStream != null) {
 			if (!openStream.isUnsubscribed()) {
 				openStream.unsubscribe();
