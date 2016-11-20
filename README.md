@@ -1,6 +1,8 @@
 # Java based Mesos Scheduler client
 
-A wrapper around the mesos java RX client found [here](https://github.com/mesosphere/mesos-rxjava). If you are comfortable with RXJava then I recommend to use that implementation directly.
+This is a simple client for easier implementation of scheduler logic. It is a wrapper around the mesos [RxJava client](https://github.com/mesosphere/mesos-rxjava). But no RxJava is needed for implementation.
+
+Built in is that the wrapper remembers frameworkId and handles acknowledge calls automatically.
 
 ## Usage
 
