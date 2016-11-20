@@ -1,45 +1,36 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>com.valhalla-game</groupId>
 	<artifactId>mesos-scheduler-client</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<name>Mesos Schduler Client</name>
 	<url>https://github.com/saiaku-gaming/mesos-scheduler-client</url>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
 	<dependencies>
-
 		<!-- This wraps around this library, but disconnects the implementation 
 			from RX -->
-
 		<dependency>
 			<groupId>com.mesosphere.mesos.rx.java</groupId>
 			<artifactId>mesos-rxjava-protobuf-client</artifactId>
 			<version>0.1.0</version>
 		</dependency>
-
 	</dependencies>
-
 	<distributionManagement>
 		<snapshotRepository>
-			<id>valhalla</id>
-			<url>http://maven.valhalla-game.com:8082/repository/valhalla/</url>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.5.1</version>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
 				<executions>
 					<execution>
 						<id>default-deploy</id>
@@ -50,20 +41,47 @@
 					</execution>
 				</executions>
 				<configuration>
-					<serverId>valhalla</serverId>
-					<nexusUrl>http://maven.valhalla-game.com:8082/nexus</nexusUrl>
-					<skipStaging>true</skipStaging>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>2.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
 						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
 							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
