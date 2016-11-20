@@ -2,7 +2,7 @@
 
 This is a simple client for easier implementation of scheduler logic. It is a wrapper around the mesos [RxJava client](https://github.com/mesosphere/mesos-rxjava). But no RxJava is needed for implementation.
 
-Built in is that the wrapper remembers frameworkId and handles acknowledge calls automatically.
+This wrapper also remembers the frameworkId and handles acknowledge calls automatically. But you do need to save it if you want to be able to reconnect to the same framework.
 
 ## Usage
 
