@@ -2,7 +2,6 @@ package com.valhallagame.mesos.scheduler_client;
 
 import static com.mesosphere.mesos.rx.java.util.UserAgentEntries.literal;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
@@ -19,6 +18,7 @@ import org.apache.mesos.v1.Protos.KillPolicy;
 import org.apache.mesos.v1.Protos.Offer;
 import org.apache.mesos.v1.Protos.OfferID;
 import org.apache.mesos.v1.Protos.TaskID;
+import org.apache.mesos.v1.Protos.TaskStatus;
 import org.apache.mesos.v1.scheduler.Protos.Call;
 import org.apache.mesos.v1.scheduler.Protos.Call.Accept;
 import org.apache.mesos.v1.scheduler.Protos.Call.AcceptInverseOffers;
@@ -203,6 +203,7 @@ public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, M
 	 * @throws URISyntaxException
 	 *             if the URL provided was not a syntactically correct URL.
 	 */
+	@Override
 	public void subscribe(URL mesosMaster, String frameworkName, double failoverTimeout, String mesosRole,
 			Function<Class<?>, UserAgentEntry> applicationUserAgentEntry, String frameworkId)
 			throws URISyntaxException {
@@ -295,8 +296,15 @@ public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, M
 				receivedSubscribed(e.getSubscribed());
 			});
 
-			events.filter(event -> event.getType() == Event.Type.UPDATE)
-					.subscribe(e -> receivedUpdate(e.getUpdate().getStatus()));
+			events.filter(event -> event.getType() == Event.Type.UPDATE).subscribe(e -> {
+				TaskStatus status = e.getUpdate().getStatus();
+				// Per mesos protocol, if we get an update and its UUID exist,
+				// then we need to call acknowledge.
+				if (!status.getUuid().isEmpty()) {
+					acknowledge(status.getAgentId(), status.getTaskId(), status.getUuid());
+				}
+				receivedUpdate(e.getUpdate().getStatus());
+			});
 
 			// This is the observable that is responsible for sending calls to
 			// mesos master.
@@ -331,7 +339,9 @@ public abstract class MesosSchedulerClient implements MesosSchedulerCallbacks, M
 	/**
 	 * Can be used to send a Call to mesos, but see {@link MesosSchedulerCalls}
 	 * for a list of implemented calls for example {@link #accept(List, List)}
-	 * @param call The Call to send to mesos
+	 * 
+	 * @param call
+	 *            The Call to send to mesos
 	 */
 	public void sendCall(Call call) {
 		if (publisher == null) {
