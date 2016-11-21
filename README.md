@@ -18,5 +18,7 @@ Extend the abstract class [MesosSchedulerClient](src/main/java/com/valhallagame/
 To know what calls you can make to the server, look at the [MesosSchedulerCalls](src/main/java/com/valhallagame/mesos/scheduler_client/MesosSchedulerCalls.java) file. To know what data you can get back from mesos, look at the [MesosSchedulerCallbacks](src/main/java/com/valhallagame/mesos/scheduler_client/MesosSchedulerCallbacks.java) file.
 
 #Changelog
+
 *0.0.1* Inital version
+
 *0.0.2* Added auto acknowledge to update calls
