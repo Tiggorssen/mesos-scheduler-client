@@ -52,3 +52,7 @@ Temporary Items
 .project
 bin
 target
+
+#intellij
+.idea
+mesos-scheduler-client.iml
